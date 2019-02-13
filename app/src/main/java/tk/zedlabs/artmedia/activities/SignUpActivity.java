@@ -1,4 +1,4 @@
-package tk.zedlabs.artmedia;
+package tk.zedlabs.artmedia.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,8 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.Parse;
 import com.parse.SignUpCallback;
+
+import tk.zedlabs.artmedia.R;
 
 public class SignUpActivity extends AppCompatActivity  {
 
@@ -50,9 +51,9 @@ public class SignUpActivity extends AppCompatActivity  {
         });
 
         if(ParseUser.getCurrentUser()!=null){
-            ParseUser.getCurrentUser().logOut();
+            transitionToSocialMediaActivity();
         }
-        final Intent gotoLoginIntent = new Intent(this,LoginActivity.class);
+        final Intent gotoLoginIntent = new Intent(this, LoginActivity.class);
         gotoLoginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         gotoLogin = findViewById(R.id.goto_login_button);
@@ -98,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity  {
 
                         Toast.makeText(SignUpActivity.this, appUser.getUsername() + " is signed up sucessfully!",
                                 Toast.LENGTH_SHORT).show();
-
+                            transitionToSocialMediaActivity();
                     } else {
 
                         Toast.makeText(SignUpActivity.this, "There was an error: " + e.getMessage(),
@@ -121,4 +122,9 @@ public class SignUpActivity extends AppCompatActivity  {
         }
     }
 
+    private void transitionToSocialMediaActivity(){
+
+        Intent transitionIntent = new Intent(SignUpActivity.this, SocialMediaActivity.class);
+        startActivity(transitionIntent);
+    }
 }

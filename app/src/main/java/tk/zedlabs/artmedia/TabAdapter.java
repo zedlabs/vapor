@@ -1,0 +1,44 @@
+package tk.zedlabs.artmedia;
+
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+
+import tk.zedlabs.artmedia.fragments.ProfileTab;
+import tk.zedlabs.artmedia.fragments.SharePictureTab;
+import tk.zedlabs.artmedia.fragments.UsersTab;
+
+public class TabAdapter extends FragmentPagerAdapter {
+
+    public TabAdapter(FragmentManager fm) {
+        super(fm);
+    }
+
+    @Override
+    public Fragment getItem(int tabPosition) {
+        switch (tabPosition){
+        case 0: return new SharePictureTab();
+        case 1: return new UsersTab();
+        case 2:return new ProfileTab();
+        default:return null;
+        }
+
+    }
+
+    @Override
+    public int getCount() {
+        return 3;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position){
+            case 0: return "Home";
+            case 1: return "Discover";
+            case 2: return "Profile";
+            default:return null;
+        }
+    }
+}

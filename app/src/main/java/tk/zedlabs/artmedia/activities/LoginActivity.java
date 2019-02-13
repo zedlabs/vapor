@@ -1,4 +1,4 @@
-package tk.zedlabs.artmedia;
+package tk.zedlabs.artmedia.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import android.widget.Toast;
+
+import tk.zedlabs.artmedia.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -48,10 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         if(ParseUser.getCurrentUser()!=null){
-            ParseUser.getCurrentUser().logOut();
+            transitionToSocialMediaActivity();
         }
 
-        final Intent gotoSignUpIntent = new Intent(this,SignUpActivity.class);
+        final Intent gotoSignUpIntent = new Intent(this, SignUpActivity.class);
         gotoSignUpIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         gotoSignUp.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (user != null && e == null) {
                                 Toast.makeText(LoginActivity.this, user.getUsername() + " is Logged in!",
                                         Toast.LENGTH_SHORT).show();
+                                transitionToSocialMediaActivity();
                             } else {
                                 Toast.makeText(LoginActivity.this, "unable to login: " + e.getMessage(),
                                         Toast.LENGTH_SHORT).show();
@@ -93,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     public void rootLayoutTapped(View view){
         try{
             InputMethodManager inputMethodManager =(InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -102,5 +104,11 @@ public class LoginActivity extends AppCompatActivity {
 
             e.printStackTrace();
         }
+    }
+
+    private void transitionToSocialMediaActivity(){
+
+        Intent transitionIntent = new Intent(LoginActivity.this, SocialMediaActivity.class);
+        startActivity(transitionIntent);
     }
 }
