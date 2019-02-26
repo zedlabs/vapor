@@ -1,11 +1,13 @@
 package tk.zedlabs.artmedia.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,8 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tk.zedlabs.artmedia.R;
+import tk.zedlabs.artmedia.activities.UserImages;
 
-public class UsersTab extends Fragment {
+public class UsersTab extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
     private ArrayList arrayList;
@@ -36,10 +39,10 @@ public class UsersTab extends Fragment {
         listView = view.findViewById(R.id.userList);
         arrayList = new ArrayList();
         arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1, arrayList);
-
+        listView.setOnItemClickListener(UsersTab.this);
 
         ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
-        parseQuery.whereNotEqualTo("nickname",ParseUser.getCurrentUser());
+        parseQuery.whereNotEqualTo("username",ParseUser.getCurrentUser().getUsername());
 
         parseQuery.findInBackground(new FindCallback<ParseUser>() {
             @Override
@@ -56,5 +59,14 @@ public class UsersTab extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Intent i = new Intent(getContext(), UserImages.class);
+        i.putExtra("username",arrayList.get(position)+"");
+        startActivity(i);
+
     }
 }
