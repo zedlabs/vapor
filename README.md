@@ -1,5 +1,5 @@
 # vapor
-a social media app for programmers
+a social media app 
 
 # Screenshots
 
